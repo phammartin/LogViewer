@@ -15,7 +15,7 @@ namespace LogViewer.Controls
             LvwControl = listViewControl;
         }
 
-        public void AddNewRow(string rowName, string firstColValue, params string[] additionalColValues)
+        public void AddRow(string rowName, string firstColValue, params string[] additionalColValues)
         {
             var row = GenerateNewItem(rowName, firstColValue, additionalColValues);
             LvwControl.Items.Add(row);
@@ -30,6 +30,37 @@ namespace LogViewer.Controls
                 var value = additionalColValues[i];
                 row.SubItems[i].Text = value;
             }
+        }
+
+        public void RefreshRows(string[] firstColValues)
+        {
+            LvwControl.BeginUpdate();
+            DoRefreshRows(firstColValues);
+            LvwControl.EndUpdate();
+        }
+
+        public void RefreshRows(DateTime[] firstColValues)
+        {
+            LvwControl.BeginUpdate();
+            var values = new string[firstColValues.Length];
+            for (int i = 0; i < firstColValues.Length; i++)
+            {
+                values[i] = firstColValues[i].ToString();
+            }
+            DoRefreshRows(values);
+            LvwControl.EndUpdate();
+        }
+
+        private void DoRefreshRows(string[] firstColValues)
+        {
+            LvwControl.Items.Clear();
+            var lvwItems = new List<ListViewItem>(firstColValues.Length);
+            foreach (var value in firstColValues)
+            {
+                var valueString = value.ToString();
+                lvwItems.Add(GenerateNewItem(valueString, valueString));
+            }
+            LvwControl.Items.AddRange(lvwItems.ToArray());
         }
 
         #region Helper Methods

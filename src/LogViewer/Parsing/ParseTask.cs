@@ -28,10 +28,10 @@ namespace LogViewer.Parsing
         {
             State = LogManagement.TaskStates.Started;
             TargetDate = targetDate;
-            Task.Run(() => RunTask(FileSet.Values.ToArray(), targetDate));
+            Task.Run(() => RunTask(FileSet.Values.ToArray()));
         }
 
-        private void RunTask(FileStringUnit[] fileSet, DateTime targetDate)
+        private void RunTask(FileStringUnit[] fileSet)
         {
             // Set the method that will parse logs as they are read from disk.
             var logParser = new ActionBlock<FileStringUnit>(
@@ -60,7 +60,7 @@ namespace LogViewer.Parsing
                 Console.WriteLine($"Total Processing Time: {sw.Elapsed.TotalSeconds} seconds.");
 
                 State = LogManagement.TaskStates.Completed;
-                OnLogProcessed(Id, String.Empty, 100, State);
+                OnLogProcessed(Id, string.Empty, 100, State);
             }
             catch (Exception ex)
             {
@@ -97,6 +97,10 @@ namespace LogViewer.Parsing
                 }
             }
             fileContent.Clear();
+            if (result.Lines.Count == 0)
+            {
+                FileSet.Remove(fileContent.Filepath);
+            }
             AddResult(result);
         }
 

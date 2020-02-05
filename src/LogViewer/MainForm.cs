@@ -23,7 +23,7 @@ namespace LogViewer
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            txtFolderpath.Text = @"C:\Users\MPham\source\repos\git\LogViewer\LogViewer\bin\Debug\Logs";
+            txtFolderpath.Text = @"C:\Temp\Logs";
             LogManagement.ProgressUpdate += LogManagement_ProgressUpdate;
             LvwManager = new ListViewManagement(lvwResultListing);
         }
@@ -44,7 +44,7 @@ namespace LogViewer
             //
             //  Target date picker
             //
-            dtpTargetDate.Value = new DateTime(DateTime.Now.Ticks, DateTimeKind.Local);
+            dtpTargetDate.Value = new DateTime(2019, 03, 29);
         }
 
         #region Form Control Events
@@ -59,7 +59,7 @@ namespace LogViewer
             {
                 var rootFolder = txtFolderpath.Text;
                 var taskId = LogManager.StartNewTask(rootFolder, dtpTargetDate.Value);
-                LvwManager.AddNewRow(taskId, $"{LogManagement.TaskStates.Pending} - {0}%", new string[] { rootFolder });
+                LvwManager.AddRow(taskId, $"{LogManagement.TaskStates.Pending} - {0}%", new string[] { rootFolder });
             }
             catch (Exception ex)
             {

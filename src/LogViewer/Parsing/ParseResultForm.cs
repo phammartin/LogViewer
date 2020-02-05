@@ -17,35 +17,39 @@ namespace LogViewer
         public ParseResultForm(DateTime[] timestamps)
         {
             InitializeComponent();
-            SetupControls(timestamps);
+            Timestamps = timestamps;
         }
 
         private void SetupControls(DateTime[] timestamps)
         {
-            lvwControl = ListViewManagement.GenerateCustomListView(splResults.Panel1, new string[] { TIMESTAMP_COLUMN_HEADER });
+            lvwControl = ListViewManagement.GenerateCustomListView(splResultSelection.Panel1, new string[] { TIMESTAMP_COLUMN_HEADER });
             LvwTimestampsManager = new ListViewManagement(lvwControl);
-            foreach (var timestamp in timestamps)
-            {
-                var value = timestamp.ToString();
-                LvwTimestampsManager.AddNewRow(value, value, new string[] { });
-            }
 
-            lvwLogfiles = ListViewManagement.GenerateCustomListView(splResults.Panel2, new string[] { FILENAME_COLUMN_HEADER });
-
+            LvwTimestampsManager.RefreshRows(timestamps);
+            lvwLogfiles = ListViewManagement.GenerateCustomListView(splResultSelection.Panel2, new string[] { FILENAME_COLUMN_HEADER });
         }
+
+        #region Published Events
+        public static event EventHandler TimestampGroupSelected;
+        #endregion
 
         #region Members
 
         private ListViewManagement LvwTimestampsManager;
         private ListViewManagement LvwLogFilesManager;
 
+        private DateTime[] Timestamps;
+
         private CustomListView lvwControl;
         private CustomListView lvwLogfiles;
 
-        private DateTime[] Timestamps;
-
-        private const string TIMESTAMP_COLUMN_HEADER = "Timestamps";
+        private const string TIMESTAMP_COLUMN_HEADER = "Timestamp Groups";
         private const string FILENAME_COLUMN_HEADER = "Filenames";
         #endregion
+
+        private void ParseResultForm_Shown(object sender, EventArgs e)
+        {
+            SetupControls(Timestamps);
+        }
     }
 }

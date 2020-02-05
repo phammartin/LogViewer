@@ -69,16 +69,17 @@ namespace LogViewer
             {
                 foreach (var timestamp in timestamps)
                 {
-                    if (!GroupedResults.ContainsKey(timestamp))
+                    var timestampGroup = timestamp.AddSeconds(-timestamp.Second);
+                    if (!GroupedResults.ContainsKey(timestampGroup))
                     {
-                        GroupedResults.Add(timestamp, new HashSet<ParseResultUnit>());
-                        GroupedResults[timestamp].Add(newResult);
+                        GroupedResults.Add(timestampGroup, new HashSet<ParseResultUnit>());
+                        GroupedResults[timestampGroup].Add(newResult);
                     }
                     else
                     {
-                        if (!GroupedResults[timestamp].Contains(newResult))
+                        if (!GroupedResults[timestampGroup].Contains(newResult))
                         {
-                            GroupedResults[timestamp].Add(newResult);
+                            GroupedResults[timestampGroup].Add(newResult);
                         }
                     }
                 } 
