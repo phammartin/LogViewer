@@ -15,9 +15,9 @@ namespace LogViewer.Controls
             LvwControl = listViewControl;
         }
 
-        public void AddRow(string rowName, string firstColValue, params string[] additionalColValues)
+        public void AddRow(string[] columnValues, string rowName = "")
         {
-            var row = GenerateNewItem(rowName, firstColValue, additionalColValues);
+            var row = GenerateNewItem(columnValues, rowName);
             LvwControl.Items.Add(row);
         }
 
@@ -32,39 +32,28 @@ namespace LogViewer.Controls
             }
         }
 
-        public void RefreshRows(string[] firstColValues)
+        public void RefreshRows(string[][] columnValues)
         {
             LvwControl.BeginUpdate();
-            DoRefreshRows(firstColValues);
+            DoRefreshRows(columnValues);
+            LvwControl.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
             LvwControl.EndUpdate();
         }
 
-        public void RefreshRows(DateTime[] firstColValues)
-        {
-            LvwControl.BeginUpdate();
-            var values = new string[firstColValues.Length];
-            for (int i = 0; i < firstColValues.Length; i++)
-            {
-                values[i] = firstColValues[i].ToString();
-            }
-            DoRefreshRows(values);
-            LvwControl.EndUpdate();
-        }
-
-        private void DoRefreshRows(string[] firstColValues)
+        private void DoRefreshRows(string[][] rowData)
         {
             LvwControl.Items.Clear();
-            var lvwItems = new List<ListViewItem>(firstColValues.Length);
-            foreach (var value in firstColValues)
+            var lvwItems = new List<ListViewItem>(rowData.Length);
+            foreach (var columnValue in rowData)
             {
-                var valueString = value.ToString();
-                lvwItems.Add(GenerateNewItem(valueString, valueString));
+                lvwItems.Add(GenerateNewItem(columnValue));
             }
             LvwControl.Items.AddRange(lvwItems.ToArray());
         }
 
         #region Helper Methods
-        public static CustomListView GenerateCustomListView(Control parent, string[] columnNames, bool gridLines = false)
+        public static CustomListView GenerateCustomListView(Control parent, string[] columnNames,
+            bool gridLines = false, bool multiselect = false)
         {
             var lvw = new CustomListView
             {
@@ -73,6 +62,7 @@ namespace LogViewer.Controls
                 View = View.Details,
                 GridLines = gridLines,
                 FullRowSelect = true,
+                MultiSelect = multiselect
             };
             for (int i = 0; i < columnNames.Length; i++)
             {
@@ -84,12 +74,19 @@ namespace LogViewer.Controls
             return lvw;
         }
 
-        private static ListViewItem GenerateNewItem(string name, string firstColValue, params string[] additionalColValues)
+        private static ListViewItem GenerateNewItem(string[] rowData, string name = "")
         {
-            var lvwItem = new ListViewItem { Name = name, Text = firstColValue };
-            foreach (var value in additionalColValues)
+            var lvwItem = new ListViewItem() { Text = rowData.First() };
+            if (name != string.Empty)
             {
-                lvwItem.SubItems.Add(new ListViewItem.ListViewSubItem(lvwItem, value));
+                lvwItem.Name = name;
+            }
+            if (rowData.Length > 1)
+            {
+                for (int i = 1; i < rowData.Length; i++)
+                {
+                    lvwItem.SubItems.Add(new ListViewItem.ListViewSubItem(lvwItem, rowData[i]));
+                }
             }
             return lvwItem;
         }

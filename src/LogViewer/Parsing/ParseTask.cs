@@ -91,13 +91,13 @@ namespace LogViewer.Parsing
                         continue;
                     }
 
-                    var messageValue = line.Remove(0, match.Value.Length);
+                    var messageValue = line.Remove(0, match.Value.Length).Trim(':');
                     var messageKey = OnMessageKeyRequested(messageValue);
                     result.AddLine(parsedDate, lineNumber, messageKey);
                 }
             }
             fileContent.Clear();
-            if (result.Lines.Count == 0)
+            if (result.Count == 0)
             {
                 FileSet.Remove(fileContent.Filepath);
             }
@@ -112,8 +112,8 @@ namespace LogViewer.Parsing
                 ProcessedFileCount++;
 
                 var percentage = GetPercentage(ProcessedFileCount, TotalFileCount);
-                var timestamps = result.Lines.Keys;
-                OnLogProcessed(Id, result.Filepath, percentage, State, timestamps.ToArray());
+                var timestamps = result.TimestampGroups;
+                OnLogProcessed(Id, result.Filepath, percentage, State, timestamps);
             }
         }
 
@@ -163,52 +163,19 @@ namespace LogViewer.Parsing
 
         #region Members
         private readonly SortedList<string, FileStringUnit> FileSet;
-
-        /// <summary>
-        /// 
-        /// </summary>
         private readonly Regex TimestampCaptureRegex = new Regex(TIMESTAMP_CAPTURE_PATTERN, RegexOptions.Compiled);
-
-        /// <summary>
-        /// 
-        /// </summary>
         private readonly object ResultsLock = new object();
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private const string TIMESTAMP_CAPTURE_PATTERN = @"\d{1,2}\/\d{1,2}\/\d{4} \d{1,2}\:\d{1,2}\:\d{1,2} [AP][M]";
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private int TotalFileCount;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private int ProcessedFileCount;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public LogManagement.TaskStates State;
-
-        /// <summary>
-        /// 
-        /// </summary>
         public readonly SortedList<string, ParseResultUnit> Results = new SortedList<string, ParseResultUnit>();
 
-        /// <summary>
-        /// 
-        /// </summary>
+        private const string TIMESTAMP_CAPTURE_PATTERN = @"\d{1,2}\/\d{1,2}\/\d{4} \d{1,2}\:\d{1,2}\:\d{1,2} [AP][M]";
+
+        private int TotalFileCount;
+        private int ProcessedFileCount;
+
+        public LogManagement.TaskStates State;
+
         public string Id { get; private set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
         public string RootFolderpath { get; private set; }
-
         public DateTime TargetDate { get; private set; }
         #endregion
     }

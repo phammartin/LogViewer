@@ -32,9 +32,9 @@
             this.grpResultSelection = new System.Windows.Forms.GroupBox();
             this.splResultSelection = new System.Windows.Forms.SplitContainer();
             this.tplLogData = new System.Windows.Forms.TableLayoutPanel();
-            this.grpOpenedLogFiles = new System.Windows.Forms.GroupBox();
+            this.grpParsedLines = new System.Windows.Forms.GroupBox();
             this.tabOpenedLogFiles = new System.Windows.Forms.TabControl();
-            this.tpSelectedLogFile = new System.Windows.Forms.TabPage();
+            this.tpSelectedFile = new System.Windows.Forms.TabPage();
             this.ssStatus = new System.Windows.Forms.StatusStrip();
             this.tslblTotalHits = new System.Windows.Forms.ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)(this.splBase)).BeginInit();
@@ -45,7 +45,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.splResultSelection)).BeginInit();
             this.splResultSelection.SuspendLayout();
             this.tplLogData.SuspendLayout();
-            this.grpOpenedLogFiles.SuspendLayout();
+            this.grpParsedLines.SuspendLayout();
             this.tabOpenedLogFiles.SuspendLayout();
             this.ssStatus.SuspendLayout();
             this.SuspendLayout();
@@ -53,23 +53,22 @@
             // splBase
             // 
             this.splBase.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splBase.IsSplitterFixed = true;
             this.splBase.Location = new System.Drawing.Point(0, 0);
-            this.splBase.Margin = new System.Windows.Forms.Padding(10, 10, 10, 10);
+            this.splBase.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.splBase.Name = "splBase";
             // 
             // splBase.Panel1
             // 
             this.splBase.Panel1.Controls.Add(this.grpResultSelection);
-            this.splBase.Panel1.Padding = new System.Windows.Forms.Padding(16, 10, 10, 10);
+            this.splBase.Panel1.Padding = new System.Windows.Forms.Padding(8, 5, 5, 5);
             // 
             // splBase.Panel2
             // 
             this.splBase.Panel2.Controls.Add(this.tplLogData);
-            this.splBase.Panel2.Padding = new System.Windows.Forms.Padding(10, 10, 8, 0);
-            this.splBase.Size = new System.Drawing.Size(1600, 823);
-            this.splBase.SplitterDistance = 340;
-            this.splBase.SplitterWidth = 2;
+            this.splBase.Panel2.Padding = new System.Windows.Forms.Padding(5, 5, 4, 0);
+            this.splBase.Size = new System.Drawing.Size(800, 428);
+            this.splBase.SplitterDistance = 170;
+            this.splBase.SplitterWidth = 1;
             this.splBase.TabIndex = 7;
             this.splBase.TabStop = false;
             // 
@@ -77,11 +76,11 @@
             // 
             this.grpResultSelection.Controls.Add(this.splResultSelection);
             this.grpResultSelection.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.grpResultSelection.Location = new System.Drawing.Point(16, 10);
-            this.grpResultSelection.Margin = new System.Windows.Forms.Padding(200, 10, 10, 10);
+            this.grpResultSelection.Location = new System.Drawing.Point(8, 5);
+            this.grpResultSelection.Margin = new System.Windows.Forms.Padding(100, 5, 5, 5);
             this.grpResultSelection.Name = "grpResultSelection";
-            this.grpResultSelection.Padding = new System.Windows.Forms.Padding(10, 10, 10, 10);
-            this.grpResultSelection.Size = new System.Drawing.Size(314, 803);
+            this.grpResultSelection.Padding = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.grpResultSelection.Size = new System.Drawing.Size(157, 418);
             this.grpResultSelection.TabIndex = 0;
             this.grpResultSelection.TabStop = false;
             this.grpResultSelection.Text = "Result Selection";
@@ -91,91 +90,87 @@
             this.splResultSelection.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splResultSelection.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.splResultSelection.IsSplitterFixed = true;
-            this.splResultSelection.Location = new System.Drawing.Point(10, 34);
-            this.splResultSelection.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.splResultSelection.Location = new System.Drawing.Point(5, 18);
             this.splResultSelection.Name = "splResultSelection";
             this.splResultSelection.Orientation = System.Windows.Forms.Orientation.Horizontal;
             this.splResultSelection.Panel1MinSize = 140;
             this.splResultSelection.Panel2MinSize = 130;
-            this.splResultSelection.Size = new System.Drawing.Size(294, 759);
-            this.splResultSelection.SplitterDistance = 405;
+            this.splResultSelection.Size = new System.Drawing.Size(147, 395);
+            this.splResultSelection.SplitterDistance = 140;
+            this.splResultSelection.SplitterWidth = 2;
             this.splResultSelection.TabIndex = 2;
             // 
             // tplLogData
             // 
             this.tplLogData.ColumnCount = 1;
             this.tplLogData.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tplLogData.Controls.Add(this.grpOpenedLogFiles, 0, 0);
+            this.tplLogData.Controls.Add(this.grpParsedLines, 0, 0);
             this.tplLogData.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tplLogData.Location = new System.Drawing.Point(10, 10);
-            this.tplLogData.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tplLogData.Location = new System.Drawing.Point(5, 5);
             this.tplLogData.Name = "tplLogData";
             this.tplLogData.RowCount = 1;
             this.tplLogData.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tplLogData.Size = new System.Drawing.Size(1240, 813);
+            this.tplLogData.Size = new System.Drawing.Size(620, 423);
             this.tplLogData.TabIndex = 2;
             // 
-            // grpOpenedLogFiles
+            // grpParsedLines
             // 
-            this.grpOpenedLogFiles.Controls.Add(this.tabOpenedLogFiles);
-            this.grpOpenedLogFiles.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.grpOpenedLogFiles.Location = new System.Drawing.Point(10, 0);
-            this.grpOpenedLogFiles.Margin = new System.Windows.Forms.Padding(10, 0, 10, 10);
-            this.grpOpenedLogFiles.Name = "grpOpenedLogFiles";
-            this.grpOpenedLogFiles.Padding = new System.Windows.Forms.Padding(10, 10, 10, 10);
-            this.grpOpenedLogFiles.Size = new System.Drawing.Size(1220, 803);
-            this.grpOpenedLogFiles.TabIndex = 1;
-            this.grpOpenedLogFiles.TabStop = false;
-            this.grpOpenedLogFiles.Text = "Opened Log Files";
+            this.grpParsedLines.Controls.Add(this.tabOpenedLogFiles);
+            this.grpParsedLines.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.grpParsedLines.Location = new System.Drawing.Point(5, 0);
+            this.grpParsedLines.Margin = new System.Windows.Forms.Padding(5, 0, 5, 5);
+            this.grpParsedLines.Name = "grpParsedLines";
+            this.grpParsedLines.Padding = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.grpParsedLines.Size = new System.Drawing.Size(610, 418);
+            this.grpParsedLines.TabIndex = 1;
+            this.grpParsedLines.TabStop = false;
+            this.grpParsedLines.Text = "Parsed Lines";
             // 
             // tabOpenedLogFiles
             // 
-            this.tabOpenedLogFiles.Controls.Add(this.tpSelectedLogFile);
+            this.tabOpenedLogFiles.Controls.Add(this.tpSelectedFile);
             this.tabOpenedLogFiles.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabOpenedLogFiles.Location = new System.Drawing.Point(10, 34);
-            this.tabOpenedLogFiles.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tabOpenedLogFiles.Location = new System.Drawing.Point(5, 18);
             this.tabOpenedLogFiles.Name = "tabOpenedLogFiles";
             this.tabOpenedLogFiles.SelectedIndex = 0;
-            this.tabOpenedLogFiles.Size = new System.Drawing.Size(1200, 759);
+            this.tabOpenedLogFiles.Size = new System.Drawing.Size(600, 395);
             this.tabOpenedLogFiles.TabIndex = 0;
             // 
-            // tpSelectedLogFile
+            // tpSelectedFile
             // 
-            this.tpSelectedLogFile.Location = new System.Drawing.Point(8, 39);
-            this.tpSelectedLogFile.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.tpSelectedLogFile.Name = "tpSelectedLogFile";
-            this.tpSelectedLogFile.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.tpSelectedLogFile.Size = new System.Drawing.Size(1184, 712);
-            this.tpSelectedLogFile.TabIndex = 0;
-            this.tpSelectedLogFile.UseVisualStyleBackColor = true;
+            this.tpSelectedFile.Location = new System.Drawing.Point(4, 22);
+            this.tpSelectedFile.Name = "tpSelectedFile";
+            this.tpSelectedFile.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tpSelectedFile.Size = new System.Drawing.Size(592, 369);
+            this.tpSelectedFile.TabIndex = 0;
+            this.tpSelectedFile.Text = "Selected File";
+            this.tpSelectedFile.UseVisualStyleBackColor = true;
             // 
             // ssStatus
             // 
             this.ssStatus.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.ssStatus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tslblTotalHits});
-            this.ssStatus.Location = new System.Drawing.Point(0, 823);
+            this.ssStatus.Location = new System.Drawing.Point(0, 428);
             this.ssStatus.Name = "ssStatus";
-            this.ssStatus.Padding = new System.Windows.Forms.Padding(2, 0, 28, 0);
-            this.ssStatus.Size = new System.Drawing.Size(1600, 42);
+            this.ssStatus.Size = new System.Drawing.Size(800, 22);
             this.ssStatus.TabIndex = 8;
             this.ssStatus.Text = "StatusStrip1";
             // 
             // tslblTotalHits
             // 
             this.tslblTotalHits.Name = "tslblTotalHits";
-            this.tslblTotalHits.Size = new System.Drawing.Size(119, 32);
+            this.tslblTotalHits.Size = new System.Drawing.Size(59, 17);
             this.tslblTotalHits.Text = "Total Hits:";
             // 
             // ParseResultForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1600, 865);
+            this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.splBase);
             this.Controls.Add(this.ssStatus);
             this.DoubleBuffered = true;
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Name = "ParseResultForm";
             this.Text = "Parse Results";
             this.Shown += new System.EventHandler(this.ParseResultForm_Shown);
@@ -187,7 +182,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.splResultSelection)).EndInit();
             this.splResultSelection.ResumeLayout(false);
             this.tplLogData.ResumeLayout(false);
-            this.grpOpenedLogFiles.ResumeLayout(false);
+            this.grpParsedLines.ResumeLayout(false);
             this.tabOpenedLogFiles.ResumeLayout(false);
             this.ssStatus.ResumeLayout(false);
             this.ssStatus.PerformLayout();
@@ -201,9 +196,9 @@
         internal System.Windows.Forms.SplitContainer splBase;
         internal System.Windows.Forms.GroupBox grpResultSelection;
         internal System.Windows.Forms.TableLayoutPanel tplLogData;
-        internal System.Windows.Forms.GroupBox grpOpenedLogFiles;
+        internal System.Windows.Forms.GroupBox grpParsedLines;
         internal System.Windows.Forms.TabControl tabOpenedLogFiles;
-        internal System.Windows.Forms.TabPage tpSelectedLogFile;
+        internal System.Windows.Forms.TabPage tpSelectedFile;
         internal System.Windows.Forms.StatusStrip ssStatus;
         internal System.Windows.Forms.ToolStripStatusLabel tslblTotalHits;
         private System.Windows.Forms.SplitContainer splResultSelection;

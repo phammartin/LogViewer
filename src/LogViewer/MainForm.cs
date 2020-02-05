@@ -23,7 +23,6 @@ namespace LogViewer
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            txtFolderpath.Text = @"C:\Temp\Logs";
             LogManagement.ProgressUpdate += LogManagement_ProgressUpdate;
             LvwManager = new ListViewManagement(lvwResultListing);
         }
@@ -40,11 +39,6 @@ namespace LogViewer
             lvwResultListing.Columns[(int)ListViewColumns.Status].Width = colFilepathW;
             lvwResultListing.Columns[(int)ListViewColumns.Filepath].Width = colStatusW;
             lvwResultListing.DoubleClick += lvwResultListing_DoubleClick;
-
-            //
-            //  Target date picker
-            //
-            dtpTargetDate.Value = new DateTime(2019, 03, 29);
         }
 
         #region Form Control Events
@@ -59,7 +53,8 @@ namespace LogViewer
             {
                 var rootFolder = txtFolderpath.Text;
                 var taskId = LogManager.StartNewTask(rootFolder, dtpTargetDate.Value);
-                LvwManager.AddRow(taskId, $"{LogManagement.TaskStates.Pending} - {0}%", new string[] { rootFolder });
+                var columnData = new string[] { $"{LogManagement.TaskStates.Pending} - {0}%", rootFolder };
+                LvwManager.AddRow(columnData, taskId);
             }
             catch (Exception ex)
             {
@@ -70,14 +65,8 @@ namespace LogViewer
         // Result Access
         private void lvwResultListing_DoubleClick(object sender, EventArgs e)
         {
-            var lvw = (CustomListView)sender;
-            var taskId = (lvw.SelectedItems.Count == 1) ? lvw.SelectedItems[0].Name : null;
-
-            if (taskId != null)
-            {
-                var resultForm = new ParseResultForm(LogManager.GroupedResults.Keys.ToArray());
-                resultForm.Show();
-            }
+            var resultForm = new ParseResultForm(LogManager.GroupedResults.Keys.ToArray());
+            resultForm.Show();
         }
 
         // Drag Drop

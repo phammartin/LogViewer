@@ -16,31 +16,36 @@ namespace LogViewer.Parsing
 
         public void AddLine(DateTime timestamp, int lineNumber, int messageId)
         {
-            if (Lines.ContainsKey(timestamp))
+            var timestampGroup = new DateTime(timestamp.AddSeconds(-(timestamp.Second)).Ticks);
+            if (Lines.ContainsKey(timestampGroup))
             {
-                Lines[timestamp].Add(new ParsedLine(lineNumber, messageId));
+                Lines[timestampGroup].Add(new ParsedLine(lineNumber, messageId, timestamp));
             }
             else
             {
-                Lines[timestamp] = new List<ParsedLine>();
-                Lines[timestamp].Add(new ParsedLine(lineNumber, messageId));
+                Lines[timestampGroup] = new List<ParsedLine>();
+                Lines[timestampGroup].Add(new ParsedLine(lineNumber, messageId, timestamp));
             }
         }
+        private SortedList<DateTime, List<ParsedLine>> Lines { get; }
 
+        public ParsedLine[] this[DateTime timestampGroup] => Lines[timestampGroup].ToArray();
+        public int Count => Lines.Count;
         public string Filepath { get; private set; }
-        public SortedList<DateTime, List<ParsedLine>> Lines { get; private set; }
-        public DateTime[] Timestamps => Lines.Keys.ToArray();
+        public DateTime[] TimestampGroups => Lines.Keys.ToArray();
     }
 
     class ParsedLine
     {
-        public ParsedLine(int lineNumber, int lineTextId)
+        public ParsedLine(int lineNumber, int lineTextId, DateTime timestamp)
         {
             LineNumber = lineNumber;
-            TextId = lineTextId;
+            MessageKey = lineTextId;
+            Timestamp = timestamp;
         }
 
         public int LineNumber { get; private set; }
-        public int TextId { get; private set; }
+        public int MessageKey { get; private set; }
+        public DateTime Timestamp { get; }
     }
 }
